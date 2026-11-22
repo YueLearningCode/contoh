@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Proyek Animasi Enzim Liase: Aldolase</title>
+  <style>
+:root { --bg: #f4f6fb; --fg: #1d2433; --muted: #5d6779; --card: #ffffff; --line: #dfe4ee; --acc: #2f5bd3; --pocket: #eef2fa; color-scheme: light; box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px) } @media (prefers-color-scheme:dark) { :root:not([data-theme="light"]) { --bg: #111725; --fg: #e8ecf4; --muted: #9aa4b6; --card: #1a2232; --line: #2f3b52; --acc: #7b9cff; --pocket: #20293c; color-scheme: dark } } :root[data-theme="dark"] { --bg: #111725; --fg: #e8ecf4; --muted: #9aa4b6; --card: #1a2232; --line: #2f3b52; --acc: #7b9cff; --pocket: #20293c; color-scheme: dark } * { box-sizing: border-box } html { scroll-behavior: smooth; scroll-padding-top: 70px } body { margin: 0; background: var(--bg); color: var(--fg); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6 } main { max-width: 920px; margin: 0 auto; padding: 0 16px 64px } .hero { background: linear-gradient(135deg, #2f5bd3, #7b3fc4); color: #fff; border-radius: 0 0 18px 18px; padding: 28px 20px 22px; margin: 0 } .hero .kicker { font-size: .9rem; opacity: .85 } .hero h1 { margin: .2em 0; font-size: 1.7rem } .hero input { width: 100%; font: inherit; border: 0; border-radius: 8px; padding: 8px 10px; background: rgba(255, 255, 255, .18); color: #fff } .hero input::placeholder { color: rgba(255, 255, 255, .7) } .hero label { font-size: .85rem; opacity: .9; display: block; margin-top: 8px } nav { position: sticky; top: env(safe-area-inset-top, 0px); background: var(--bg); padding: 10px 0; z-index: 5; display: flex; gap: 8px; overflow-x: auto; border-bottom: 1px solid var(--line) } nav a { color: var(--acc); text-decoration: none; font-size: .88rem; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; white-space: nowrap; background: var(--card) } section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; margin: 18px 0; box-shadow: 0 1px 3px rgba(0, 0, 0, .04) } h2 { font-size: 1.3rem; margin: 0 0 .5em } h3 { font-size: 1.05rem; margin: 1.1em 0 .4em } .seg { display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--acc); margin-bottom: 4px } .muted { color: var(--muted) } .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 10px } .card { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--bg) } .card b { display: block; margin-bottom: 4px } .eq { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .88rem; background: var(--card); border-radius: 6px; padding: 6px 8px; margin-top: 6px; display: block } .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 10px 0 } .flow span { border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; font-size: .9rem; background: var(--bg) } .flow span.hi { background: var(--acc); color: #fff; border-color: var(--acc); font-weight: 700 } .flow i { font-style: normal; color: var(--muted) } .legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: .9rem; margin: 10px 0 } .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; vertical-align: -1px } .anim { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 12px; background: var(--bg) } .anim text { font-family: system-ui, Arial, sans-serif; fill: var(--fg) } .bond { stroke: var(--fg); stroke-width: 4; stroke-linecap: round } .atom { fill: var(--card); stroke: #2f5bd3; stroke-width: 3 } .tr { transition: transform .9s ease, opacity .6s ease, stroke .4s ease } .controls { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; align-items: center } button { font: inherit; color: #fff; background: var(--acc); border: 0; border-radius: 8px; padding: 9px 14px; cursor: pointer } button.alt { background: transparent; color: var(--acc); border: 1px solid var(--acc) } button:disabled { opacity: .4; cursor: default } .dots { display: flex; gap: 6px; margin-left: auto } .dots button { width: 12px; height: 12px; padding: 0; border-radius: 50%; background: var(--line) } .dots button.on { background: var(--acc) } .caption { border-left: 5px solid var(--acc); background: var(--bg); border-radius: 8px; padding: 12px 14px; margin-top: 8px } .caption h3 { margin: 0 0 4px; color: var(--acc) } .caption p { margin: .2em 0 } .bondnote { font-size: .9rem; color: var(--muted); margin-top: 6px } table { width: 100%; border-collapse: collapse; font-size: .92rem } th, td { border: 1px solid var(--line); padding: 8px; text-align: left; vertical-align: top } th { background: var(--bg) } textarea, input[type=text] { width: 100%; font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px } textarea { min-height: 76px; resize: vertical } label.f { display: block; font-size: .9rem; color: var(--muted); margin: 10px 0 4px } .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px } @media (max-width:620px) { .grid2 { grid-template-columns: 1fr } .dots { margin-left: 0 } } .drop { border: 2px dashed var(--line); border-radius: 12px; padding: 22px; text-align: center; color: var(--muted) } .check label { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; cursor: pointer } .check input { margin-top: 5px; width: 18px; height: 18px; flex: none } footer { text-align: center; color: var(--muted); font-size: .85rem; margin-top: 24px } /* Segmen 3: semua gerak dikendalikan satu linimasa di aldolase.js. */ #s3 { --blue: #3264d9; --purple: #9555db; --green: #18816c; --red: #df5266; --gold: #cf831e; } #s3 .lab-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; } #s3 .lab-heading h2 { font-size: clamp(1.5rem, 4vw, 2.15rem); line-height: 1.2; letter-spacing: -.04em; margin: 6px 0 12px; } #s3 .lab-heading p { margin: 0; max-width: 570px; color: var(--muted); } #s3 .lab-badge { color: var(--acc); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; white-space: nowrap; font-size: .875rem; } #s3 .reaction-strip { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 18px 12px; margin: 22px 0; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; } #s3 .reaction-strip strong { font-size: 1rem; } #s3 .reaction-strip small { display: block; font-size: .875rem; color: var(--muted); } #s3 .reaction-strip .reaction-symbol { font-size: 1.6rem; color: var(--acc); margin: 0 8px; } #s3 .reaction-strip .reaction-product { color: var(--green); } #s3 .lab-player { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--bg); } #s3 .stage-top { background: #101d3b; color: #c6d4f3; padding: 14px 18px 0; display: flex; gap: 14px; justify-content: space-between; align-items: center; font-size: .875rem; } #s3 .stage-top strong { color: #fff; font-weight: 600; } #s3 .stage-state { display: flex; align-items: center; gap: 7px; } #s3 .stage-state::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #c5a3ff; } #s3 .lab-stage { background: #101d3b; position: relative; overflow-x: auto; scrollbar-color: #708ac0 #101d3b; } #s3 .lab-stage.is-zoomed #anim { width: 150%; min-width: 720px; max-width: none; } #s3 #anim { display: block; width: 100%; height: auto; background: #101d3b; border: 0; border-radius: 0; } #s3 #anim text { font-family: system-ui, sans-serif; fill: #e8efff; } #s3 #anim .svg-muted { fill: #afbedc; } #s3 #anim .svg-label { font-size: 16px; font-weight: 600; } #s3 #anim .svg-atom-text { font-size: 18px; font-weight: 700; } #s3 #anim .chain-bond { stroke: #9fb9f1; stroke-width: 4; stroke-linecap: round; } #s3 #anim .carbon { fill: url(#carbonFill); stroke: #7aa9ff; stroke-width: 2; } #s3 #anim .phosphate { fill: #583c1c; stroke: #efb65e; stroke-width: 2; } #s3 #anim .phosphate-label { fill: #ffda9e; font-weight: 700; } #s3 #anim .oxygen { fill: #ffa3ad; font-size: 17px; font-weight: 600; } #s3 #anim .molecule-hotspot { cursor: pointer; outline: none; } #s3 #anim .molecule-hotspot:focus-visible > .carbon, #s3 #anim .molecule-hotspot:hover > .carbon { stroke: #fff; stroke-width: 4; } #s3 #anim .molecule-hotspot:focus-visible .hotspot-ring, #s3 #anim .molecule-hotspot:hover .hotspot-ring { stroke: #fff; stroke-width: 2; } #s3 .reaction-events { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 0 18px 16px; background: #101d3b; color: #d6baff; font-size: .875rem; } #s3 #product-status { color: #7de1c4; } #s3 .reaction-events small { flex-basis: 100%; color: #afbedc; font-size: .875rem; } #s3 .diagram-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 0 18px 14px; background: #101d3b; } #s3 #zoom { background: transparent; color: #d6baff; border: 1px solid #75639e; font-size: .875rem; padding: 6px 10px; } #s3 .stage-hint { flex: 1 1 280px; margin: 0; color: #afbedc; font-size: .875rem; } #s3 .lab-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: .875rem; } #s3 .lab-legend span { display: flex; align-items: center; gap: 6px; } #s3 .legend-line { width: 17px; height: 3px; background: var(--blue); border-radius: 4px; } #s3 .legend-line.purple { background: var(--purple); } #s3 .legend-line.red { background: var(--red); } #s3 .legend-line.gold { background: var(--gold); } #s3 .transport { padding: 16px 18px 18px; } #s3 .timeline-label { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; font-size: .875rem; margin-bottom: 2px; } #s3 #time-label { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; } #s3 input[type=range] { width: 100%; min-height: 32px; margin: 0; accent-color: var(--acc); cursor: pointer; touch-action: pan-y; } #s3 .transport-buttons { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 8px; } #s3 button { min-height: 44px; font-size: .9375rem; } #s3 button:focus-visible, #s3 select:focus-visible, #s3 input:focus-visible, #s3 summary:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; } #s3 #play { min-width: 130px; background: #365dd1; color: #fff; display: inline-flex; align-items: center; justify-content: center; gap: 9px; box-shadow: 0 3px 10px #2f5bd329; } #s3 #play svg { width: 16px; height: 16px; fill: currentColor; } #s3 #reset { margin-right: auto; } #s3 .speed-control { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .875rem; } #s3 select { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 28px 8px 10px; min-height: 44px; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%237b8ba7' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; } #s3 .keyboard-hint { font-size: .875rem; color: var(--muted); margin: 10px 0 0; } #s3 .step-nav { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; margin: 18px 0; } #s3 .step-nav button { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 10px; padding: 10px 8px; text-align: left; line-height: 1.3; font-size: .875rem; } #s3 .step-nav .step-number { display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid var(--line); border-radius: 50%; font-size: .875rem; } #s3 .step-nav button[aria-current=step] { color: var(--acc); border-color: var(--acc); background: var(--pocket); } #s3 .step-nav button[aria-current=step] .step-number { color: #fff; background: #365dd1; border-color: #365dd1; } #s3 .explain-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; } #s3 .scene-caption { padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); } #s3 .scene-caption h3 { margin: 5px 0 8px; font-size: 1.2rem; line-height: 1.3; } #s3 .scene-caption p { margin: 0 0 12px; } #s3 .eyebrow { color: var(--acc); font-size: .875rem; font-weight: 600; } #s3 .bond-change { margin: 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9375rem; } #s3 .bond-change b { color: var(--fg); } #s3 .inspector { padding: 18px; border: 1px solid var(--line); border-radius: 12px; } #s3 .inspector h3 { margin: 5px 0 8px; font-size: 1.05rem; } #s3 .inspector p { margin: 0; font-size: .9375rem; color: var(--muted); } #s3 .inspect-options { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; } #s3 .inspect-options button { min-height: 36px; padding: 5px 9px; font-size: .875rem; background: var(--bg); color: var(--muted); border: 1px solid var(--line); } #s3 .inspect-options button[aria-pressed=true] { color: var(--acc); border-color: var(--acc); } #s3 .takeaway { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: 12px; border-radius: 12px; padding: 16px; margin-top: 16px; background: var(--pocket); } #s3 .takeaway-mark { display: grid; place-items: center; width: 38px; height: 38px; font-weight: 700; border: 1px solid var(--line); border-radius: 50%; color: var(--acc); } #s3 .takeaway p { margin: 0; font-size: .9375rem; } #s3 .lab-notes { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px; font-size: .9375rem; } #s3 .lab-notes summary { cursor: pointer; font-weight: 600; color: var(--acc); min-height: 32px; } #s3 .lab-notes a { color: var(--acc); overflow-wrap: anywhere; } #s3 .lab-notes p { margin-bottom: 8px; } #s3 .reduced-note { font-size: .875rem; color: var(--muted); margin: 10px 0 0; } :root[data-theme="dark"] #s3 { --green: #75dcb8; } @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #s3 { --green: #75dcb8; } } @media (max-width: 700px) { #s3 { padding: 16px; } #s3 .lab-heading { display: block; } #s3 .lab-badge { display: inline-block; margin-top: 14px; } #s3 .step-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); } #s3 .explain-grid { grid-template-columns: 1fr; } #s3 .reaction-strip { justify-content: flex-start; } #s3 .transport { padding: 12px; } #s3 .stage-top { padding: 12px 12px 0; font-size: .8rem; } #s3 .transport-buttons { gap: 6px; } #s3 #reset { margin-right: 0; } #s3 .speed-control { margin-left: auto; } } @media (max-width: 420px) { #s3 .step-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); } #s3 .transport-buttons button { padding: 8px 10px; } #s3 .speed-control { width: 100%; justify-content: space-between; } #s3 .timeline-label { flex-wrap: wrap; gap: 0; } #s3 .timeline-label label { flex-basis: 100%; } #s3 #time-label { margin-left: auto; } #s3 .stage-top { align-items: flex-start; } #s3 .stage-state { white-space: nowrap; } } @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="kicker">Mata Kuliah Biokimia (KPM4231) · Pertemuan 3: Enzimologi</div>
+    <h1>Proyek Animasi &amp; Simulasi Enzim: Kelas Liase</h1>
+    <div>Enzim pilihan: <b>Aldolase</b> · Proses metabolisme: <b>Glikolisis</b></div>
+    <div class="grid2" style="margin-top:12px">
+      <div><label for="kel">Nama kelompok</label><input id="kel" type="text" placeholder="Tulis nama kelompok"></div>
+      <div><label for="ang">Anggota</label><input id="ang" type="text" placeholder="Nama anggota, dipisahkan koma">
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#s1">Segmen 1</a><a href="#s2">Segmen 2</a><a href="#s3">Segmen 3: Animasi</a><a href="#narasi">Narasi
+      &amp; Jurnal</a><a href="#prompt">Prompt</a><a href="#cek">Checklist</a>
+  </nav>
+
+  <main>
+    <section id="tujuan">
+      <span class="seg">Tujuan</span>
+      <h2>Tujuan Pembelajaran</h2>
+      <ul>
+        <li>Menjelaskan mekanisme reaksi di sisi aktif enzim liase, termasuk ikatan yang putus dan terbentuk.</li>
+        <li>Membedakan liase dari kelas enzim lain berdasarkan jenis reaksinya.</li>
+        <li>Mengaitkan kerja aldolase dengan jalur glikolisis.</li>
+        <li>Menghubungkan animasi dengan data atau gambar dari jurnal ilmiah.</li>
+      </ul>
+    </section>
+
+    <section id="s1">
+      <span class="seg">Segmen 1 · Pembukaan</span>
+      <h2>Apa itu enzim kelas liase?</h2>
+      <p>Liase (lyase) adalah kelas enzim yang <b>memutus atau membentuk ikatan</b> seperti C–C, C–O, C–N, dan C–S
+        <b>tanpa hidrolisis dan tanpa oksidasi</b>. Reaksinya umumnya berupa:
+      </p>
+      <div class="cards">
+        <div class="card"><b>Eliminasi</b>Melepas gugus kecil seperti H2O atau CO2 sehingga terbentuk ikatan
+          rangkap.<span class="eq">2-fosfogliserat → PEP + H2O</span></div>
+        <div class="card"><b>Adisi</b>Menambahkan gugus ke ikatan rangkap.<span class="eq">Fumarat + H2O →
+            L-malat</span></div>
+        <div class="card"><b>Pemutusan C–C</b>Memecah ikatan karbon–karbon, misalnya pada gula.<span
+            class="eq">Fruktosa-1,6-bisfosfat → DHAP + G3P</span></div>
+      </div>
+    </section>
+
+    <section id="s2">
+      <span class="seg">Segmen 2 · Jenis dalam kelas liase</span>
+      <h2>Jenis-jenis liase lainnya</h2>
+      <div class="cards">
+        <div class="card"><b>Piruvat dekarboksilase</b>Melepas CO2 dari piruvat menjadi asetaldehida. Substratnya asam
+          keto. Terjadi pada fermentasi alkohol ragi.</div>
+        <div class="card"><b>Glutamat dekarboksilase</b>Melepas CO2 dari asam amino glutamat menjadi GABA,
+          neurotransmiter penghambat di otak. Substratnya asam amino.</div>
+        <div class="card"><b>Enolase</b>Mendehidrasi 2-fosfogliserat menjadi fosfoenolpiruvat. Enzim ini memakai Mg2+
+          dan bekerja di glikolisis.</div>
+        <div class="card"><b>Karbonat anhidrase</b>Mengubah CO2 dan H2O bolak-balik menjadi H2CO3. Enzim ini memakai
+          Zn2+ dan berperan dalam transpor CO2 darah.</div>
+      </div>
+    </section>
+
+    <section id="s3" aria-labelledby="lab-title">
+      <span class="seg">Segmen 3 · Laboratorium aldolase</span>
+      <div class="lab-heading">
+        <div>
+          <h2>Posisi aldolase dalam glikolisis</h2>
+          <div class="flow">
+            <span>Glukosa</span><i>→</i><span>Glukosa-6-fosfat</span><i>→</i><span>Fruktosa-6-fosfat</span><i>→</i><span>Fruktosa-1,6-bisfosfat</span><i>→</i><span
+              class="hi">Aldolase</span><i>→</i><span>DHAP ↔ G3P</span><i>→</i><span>… → Piruvat</span>
+          </div>
+          <p class="muted">Aldolase bekerja pada tahap ke-4 glikolisis, yaitu saat gula 6 karbon dipecah menjadi dua
+            gula 3 karbon.</p>
+        </div>
+        <span class="lab-badge">Liase · EC 4.1.2.13</span>
+      </div>
+      <div class="reaction-strip" aria-label="Reaksi reversibel: fruktosa-1,6-bisfosfat menjadi DHAP dan G3P">
+        <div><strong>Fruktosa-1,6-bisfosfat</strong><small>1 molekul · 6 karbon</small></div>
+        <span class="reaction-symbol" aria-hidden="true">⇌</span>
+        <div class="reaction-product"><strong>DHAP + G3P</strong><small>2 molekul · masing-masing 3 karbon</small></div>
+      </div>
+
+      <div class="lab-player" id="lab-player" tabindex="0"
+        aria-label="Pemutar mekanisme aldolase. Spasi untuk putar atau jeda, panah kiri dan kanan untuk berpindah tahap.">
+        <div class="stage-top">
+          <strong>ALDOLASE KELAS I <span aria-hidden="true">/</span> SISI AKTIF</strong>
+          <span class="stage-state" id="play-state" role="status">Siap dijelajahi</span>
+        </div>
+        <div class="lab-stage">
+          <svg id="anim" viewBox="0 0 900 500" role="group" aria-labelledby="anim-title anim-description">
+            <title id="anim-title">Mekanisme aldolase kelas I</title>
+            <desc id="anim-description">Skema interaktif: lisin mengikat C2, ikatan C3–C4 terputus, G3P dilepas, lalu
+              hidrolisis membebaskan DHAP. Pilih bagian molekul untuk penjelasan.</desc>
+            <defs>
+              <radialGradient id="pocketFill">
+                <stop stop-color="#284279" stop-opacity=".8" />
+                <stop offset="1" stop-color="#1a2b50" stop-opacity=".5" />
+              </radialGradient>
+              <radialGradient id="carbonFill" cx="30%" cy="25%">
+                <stop stop-color="#426fb6" />
+                <stop offset="1" stop-color="#203b72" />
+              </radialGradient>
+              <pattern id="labGrid" width="28" height="28" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r="1" fill="#7693c5" opacity=".13" />
+              </pattern>
+              <filter id="reactionGlow" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur stdDeviation="7" />
+              </filter>
+            </defs>
+            <rect width="900" height="500" fill="url(#labGrid)" />
+            <ellipse cx="450" cy="243" rx="325" ry="145" fill="#416ed8" opacity=".07" />
+            <path id="pocket-shape"
+              d="M145 80 Q88 80 88 140 L88 295 Q88 352 148 352 L752 352 Q812 352 812 295 L812 140 Q812 80 755 80 L380 80 Q365 115 332 115 L280 115 Q247 115 232 80 Z"
+              fill="url(#pocketFill)" stroke="#566ca2" stroke-width="1.5" />
+            <path d="M152 88 H221 M389 88 H746" stroke="#6a89c8" stroke-width="3" stroke-linecap="round"
+              opacity=".35" />
+            <text x="755" y="111" text-anchor="end" class="svg-muted" font-size="14">kantong enzim</text>
+            <g id="lys" class="molecule-hotspot" role="button" tabindex="0" data-inspect="lys"
+              aria-label="Jelajahi lisin enzim">
+              <path d="M306 78 V114" stroke="#b48aef" stroke-width="5" stroke-linecap="round" />
+              <circle class="hotspot-ring" cx="306" cy="145" r="31" fill="#593782" stroke="#bd91fa" stroke-width="2" />
+              <text x="306" y="73" text-anchor="middle" class="svg-label" style="fill:#d6baff">Lys · lisin</text>
+              <text id="lys-label" x="306" y="152" text-anchor="middle" font-size="19" font-weight="700">NH₂</text>
+            </g>
+            <g id="lys-bonds" stroke="#ca9fff" stroke-width="4" stroke-linecap="round">
+              <line id="lys-single" x1="306" y1="178" x2="306" y2="220" />
+              <g id="imine">
+                <line x1="301" y1="178" x2="301" y2="220" />
+                <line x1="311" y1="178" x2="311" y2="220" />
+              </g>
+            </g>
+            <g id="cut-hotspot" class="molecule-hotspot" role="button" tabindex="0" data-inspect="cut"
+              aria-label="Jelajahi ikatan C3–C4 yang terputus">
+              <line id="cut-glow" x1="427" y1="245" x2="473" y2="245" stroke="#ff647c" stroke-width="18"
+                filter="url(#reactionGlow)" opacity="0" />
+              <line id="cut" x1="427" y1="245" x2="473" y2="245" stroke="#9fb9f1" stroke-width="5"
+                stroke-linecap="round" />
+              <rect x="425" y="219" width="50" height="53" fill="transparent" />
+            </g>
+            <g id="left">
+              <line x1="159" y1="245" x2="185" y2="245" class="chain-bond" />
+              <line x1="235" y1="245" x2="281" y2="245" class="chain-bond" />
+              <line x1="331" y1="245" x2="377" y2="245" class="chain-bond" />
+              <line id="enamine" x1="335" y1="234" x2="373" y2="234" stroke="#ca9fff" stroke-width="3"
+                stroke-linecap="round" opacity="0" />
+              <g class="molecule-hotspot" role="button" tabindex="0" data-inspect="phosphate"
+                aria-label="Jelajahi fosfat pada C1">
+                <circle class="phosphate hotspot-ring" cx="138" cy="245" r="21" /><text x="138" y="251"
+                  text-anchor="middle" class="phosphate-label">P</text>
+              </g>
+              <g id="left-atoms"></g>
+              <g id="c2-oxygen">
+                <line x1="306" y1="271" x2="306" y2="285" stroke="#ffa3ad" stroke-width="3" />
+                <line id="c2-double" x1="315" y1="271" x2="315" y2="285" stroke="#ffa3ad" stroke-width="3" />
+                <text id="c2-oxygen-label" x="306" y="308" text-anchor="middle" class="oxygen">O</text>
+              </g>
+              <line x1="402" y1="271" x2="402" y2="285" stroke="#9fb9f1" stroke-width="3" />
+              <text x="402" y="308" text-anchor="middle" font-size="17">OH</text>
+              <text id="dhap" x="285" y="355" text-anchor="middle" class="svg-label" style="fill:#7de1c4"
+                opacity="0">DHAP · 3 karbon</text>
+              <text id="intermediate" x="305" y="343" text-anchor="middle" font-size="16" style="fill:#d6baff"
+                opacity="0">intermediat terikat</text>
+            </g>
+            <g id="right">
+              <line x1="523" y1="245" x2="569" y2="245" class="chain-bond" />
+              <line x1="619" y1="245" x2="665" y2="245" class="chain-bond" />
+              <line x1="715" y1="245" x2="741" y2="245" class="chain-bond" />
+              <g class="molecule-hotspot" role="button" tabindex="0" data-inspect="phosphate"
+                aria-label="Jelajahi fosfat pada C6">
+                <circle class="phosphate hotspot-ring" cx="762" cy="245" r="21" /><text x="762" y="251"
+                  text-anchor="middle" class="phosphate-label">P</text>
+              </g>
+              <g id="right-atoms"></g>
+              <line x1="498" y1="271" x2="498" y2="285" stroke="#ffa3ad" stroke-width="3" />
+              <line id="c4-double" x1="507" y1="271" x2="507" y2="285" stroke="#ffa3ad" stroke-width="3" opacity="0" />
+              <text id="c4-oxygen-label" x="498" y="308" text-anchor="middle" class="oxygen">OH</text>
+              <line x1="594" y1="271" x2="594" y2="285" stroke="#9fb9f1" stroke-width="3" />
+              <text x="594" y="308" text-anchor="middle" font-size="17">OH</text>
+              <text id="g3p" x="603" y="355" text-anchor="middle" class="svg-label" style="fill:#7de1c4" opacity="0">G3P
+                · 3 karbon</text>
+            </g>
+            <g id="water" opacity="0">
+              <rect x="-38" y="-21" width="76" height="42" rx="21" fill="#173e65" stroke="#6ac9ef" /><text x="0" y="6"
+                text-anchor="middle" font-size="18" style="fill:#9bdeff">H₂O</text>
+            </g>
+            <g id="proton" opacity="0">
+              <circle cx="410" cy="190" r="18" fill="#583782" /><text x="410" y="196" text-anchor="middle"
+                style="fill:#dfcaff" font-size="17">H⁺</text>
+            </g>
+            <text id="empty-guide" x="450" y="245" text-anchor="middle" font-size="18" class="svg-muted" pointer-events="none" aria-hidden="true">Putar animasi untuk melihat substrat masuk.</text>
+            <text id="stage-equation" x="450" y="481" text-anchor="middle" font-size="17" class="svg-muted">6 karbon,
+              dua gugus fosfat, satu substrat.</text>
+          </svg>
+        </div>
+        <div class="reaction-events">
+          <strong id="molecule-event" role="status">Menunggu substrat masuk</strong>
+          <span id="product-status">Produk belum dilepas</span>
+          <small>Memudar berarti zat keluar dari area gambar; zatnya tetap ada.</small>
+        </div>
+        <div class="diagram-tools">
+          <button id="zoom" type="button" aria-pressed="false" aria-controls="anim">Perbesar diagram</button>
+          <p class="stage-hint" id="diagram-hint">Pilih karbon, lisin, fosfat, atau ikatan di tengah untuk
+            penjelasannya.</p>
+        </div>
+        <div class="lab-legend" aria-label="Legenda warna">
+          <span><i class="legend-line"></i>Rangka karbon</span><span><i class="legend-line purple"></i>Ikatan
+            lisin</span><span><i class="legend-line red"></i>Ikatan putus</span><span><i
+              class="legend-line gold"></i>Fosfat (P)</span>
+        </div>
+        <div class="transport">
+          <div class="timeline-label"><label for="timeline">Geser untuk menelusuri reaksi</label><output id="time-label"
+              for="timeline">00:00 / 00:42</output></div>
+          <input id="timeline" type="range" min="0" max="42" step="0.01" value="0"
+            aria-label="Posisi animasi dalam detik" aria-describedby="keyboard-hint">
+          <div class="transport-buttons">
+            <button id="play" type="button" aria-controls="anim" aria-label="Putar animasi"><svg viewBox="0 0 16 16"
+                aria-hidden="true">
+                <path d="M4 2 14 8 4 14Z" />
+              </svg><span id="play-label">Putar animasi</span></button>
+            <button id="prev" type="button" class="alt" aria-label="Tahap sebelumnya">Sebelumnya</button>
+            <button id="next" type="button" class="alt" aria-label="Tahap berikutnya">Berikutnya</button>
+            <button id="reset" type="button" class="alt" aria-label="Ulangi animasi dari awal">Ulangi</button>
+            <label class="speed-control" for="speed">Kecepatan<select id="speed">
+                <option value="0.5">0,5×</option>
+                <option value="1" selected>1×</option>
+                <option value="1.5">1,5×</option>
+                <option value="2">2×</option>
+              </select></label>
+          </div>
+          <p id="keyboard-hint" class="keyboard-hint">Saat pemutar dipilih: Spasi = putar/jeda · ← / → = tahap · Home =
+            awal.</p>
+          <p id="reduced-note" class="reduced-note" hidden>Mode minim gerak aktif. Pilih tahap untuk menampilkan kondisi
+            reaksi tanpa transisi, atau tekan Putar jika ingin menjalankan animasi.</p>
+        </div>
+      </div>
+
+      <div id="steps" class="step-nav" role="group" aria-label="Pilih tahap mekanisme"></div>
+      <div class="explain-grid">
+        <div class="scene-caption" aria-live="polite" aria-atomic="true">
+          <span class="eyebrow" id="stage-counter">TAHAP 1 DARI 7</span>
+          <h3 id="ctitle">Kenali substratnya</h3>
+          <p id="ctext"></p>
+          <div class="bond-change"><b>Perubahan ikatan</b>
+            <div id="cbond"></div>
+          </div>
+        </div>
+        <aside class="inspector" aria-labelledby="inspect-title">
+          <span class="eyebrow">JELAJAHI MOLEKUL</span>
+          <div aria-live="polite" aria-atomic="true">
+            <h3 id="inspect-title">Mengapa C3–C4?</h3>
+            <p id="inspect-text"></p>
+          </div>
+          <div class="inspect-options" role="group" aria-label="Bagian molekul"><button type="button" data-inspect="cut"
+              aria-pressed="true">C3–C4</button><button type="button" data-inspect="lys"
+              aria-pressed="false">Lisin</button><button type="button" data-inspect="c2"
+              aria-pressed="false">C2</button><button type="button" data-inspect="phosphate"
+              aria-pressed="false">Fosfat</button></div>
+        </aside>
+      </div>
+      <div class="takeaway"><span class="takeaway-mark">6C</span>
+        <p><b>Karbonnya tetap lengkap: 6 = 3 + 3.</b> Aldolase menghasilkan satu DHAP dan satu G3P. Setelah itu, enzim
+          lain, <b>triosa fosfat isomerase</b>, dapat mengubah DHAP menjadi G3P agar keduanya melanjutkan glikolisis.
+        </p>
+      </div>
+      <details class="lab-notes">
+        <summary>Memahami model dan sumber ilmiahnya</summary>
+        <p>Ini skema pembelajaran <b>aldolase kelas I</b> dalam arah glikolisis. Nomor C1–C6 selalu mengikuti karbon
+          substrat asal, bukan penomoran ulang produk. Bentuk rantai terbuka, ukuran molekul, gugus H, muatan, serta
+          perpindahan proton oleh residu asam–basa disederhanakan; gambar ini bukan struktur kimia lengkap atau model 3D
+          protein.</p>
+        <p>Pemutusan C3–C4 merupakan pemutusan aldol, bukan hidrolisis ikatan C–C. Air dilepas saat basa Schiff
+          terbentuk dan digunakan kembali saat ikatan dengan lisin dihidrolisis. Secara keseluruhan, reaksi aldolase
+          tidak mengonsumsi air. Aldolase kelas II memakai ion logam dan tidak mengikuti skema lisin ini.</p>
+        <p>Rujukan: <a href="https://iubmb.qmul.ac.uk/enzyme/EC4/1/2/13.html" target="_blank"
+            rel="noopener noreferrer">IUBMB · reaksi EC 4.1.2.13</a>; <a
+            href="https://www.ebi.ac.uk/thornton-srv/m-csa/entry/222/" target="_blank"
+            rel="noopener noreferrer">EMBL-EBI M-CSA · mekanisme kelas I</a>; <a
+            href="https://doi.org/10.1021/bi048192o" target="_blank" rel="noopener noreferrer">Lorentzen dkk. (2005) ·
+            intermediat reaksi</a>.</p>
+      </details>
+    </section>
+
+    <section id="narasi">
+      <span class="seg">Narasi &amp; Jurnal</span>
+      <h2>Keterkaitan tahap animasi dengan gambar jurnal</h2>
+      <p class="muted">Setiap tahap di bawah ini harus dikaitkan dengan bagian tertentu pada gambar jurnal. Tulis bagian
+        gambar yang sesuai, misalnya panel, label, atau skema.</p>
+      <div id="tahap"></div>
+
+      <h3>Gambar jurnal ilmiah</h3>
+      <div class="drop">
+        <input id="jfile" type="file" accept="image/*" style="margin-bottom:10px">
+        <div>Unggah 1 gambar dari jurnal ilmiah (sebaiknya open access). Gambar akan tampil di sini.</div>
+        <img id="jimg" alt="Gambar jurnal pembanding" hidden style="max-width:100%;border-radius:10px;margin-top:12px">
+      </div>
+      <label class="f" for="jcap">Keterangan gambar</label>
+      <textarea id="jcap"
+        placeholder="Contoh: Gambar 2 dari [penulis] (tahun), skema mekanisme aldolase kelas I."></textarea>
+      <label class="f" for="sitasi">Sitasi jurnal (format APA)</label>
+      <textarea id="sitasi"
+        placeholder="Penulis. (Tahun). Judul artikel. Nama Jurnal, volume(nomor), halaman. https://doi.org/..."></textarea>
+    </section>
+
+    <section id="prompt">
+      <span class="seg">Vibe Coding</span>
+      <h2>Salinan prompt &amp; narasi penjelasan</h2>
+      <label class="f" for="promptTxt">Salinan prompt yang dipakai kelompok untuk membuat animasi</label>
+      <textarea id="promptTxt" style="min-height:150px"
+        placeholder="Tempel prompt yang benar-benar dipakai. Jika ada beberapa prompt, tulis berurutan."></textarea>
+      <label class="f" for="narasiTxt">Narasi penjelasan keseluruhan</label>
+      <textarea id="narasiTxt" style="min-height:150px"
+        placeholder="Ringkas mekanisme aldolase dan kaitkannya dengan glikolisis serta gambar jurnal."></textarea>
+    </section>
+
+    <section id="cek">
+      <span class="seg">Checklist</span>
+      <h2>Kelengkapan tugas</h2>
+      <div class="check">
+        <label><input type="checkbox"> Segmen 1: pembukaan tentang kelas liase</label>
+        <label><input type="checkbox"> Segmen 2: minimal 2–3 jenis liase lain dijelaskan</label>
+        <label><input type="checkbox"> Segmen 3: enzim spesifik dan proses metabolisme disebut</label>
+        <label><input type="checkbox"> Animasi menunjukkan ikatan yang putus dan terbentuk</label>
+        <label><input type="checkbox"> Gambar jurnal dan sitasi sudah dicantumkan</label>
+        <label><input type="checkbox"> Narasi setiap tahap dikaitkan dengan gambar jurnal</label>
+        <label><input type="checkbox"> Salinan prompt sudah diisi</label>
+      </div>
+    </section>
+
+    <footer>Proyek Animasi &amp; Simulasi Enzim · Biokimia KPM4231</footer>
+  </main>
+
+  <script>
+/* Aldolase kelas I. Waktu reaksi adalah waktu presentasi, bukan laju kinetika. */
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const root = $('s3');
+  if (!root) return;
+
+  // Satu sumber untuk gambar, narasi, dan kolom jurnal. Setiap pose adalah
+  // kondisi kimia skematis; interpolasi antarkondisi hanya untuk pembelajaran.
+  const scenes = [
+    {
+      t: 'Kenali substratnya', short: 'Substrat',
+      x: 'Awalnya sisi aktif masih kosong. Saat animasi diputar, fruktosa-1,6-bisfosfat (FBP) muncul perlahan dan masuk. Molekul ini membawa enam karbon dan dua gugus fosfat; nomor C1 sampai C6 membantu kita mengikuti jejaknya.',
+      b: 'Belum ada perubahan. Perhatikan gugus karbonil C=O pada C2.',
+      note: '6 karbon, dua gugus fosfat, satu substrat.',
+      pose: { leftY: 92, leftX: 0, rightY: 92, rightX: 0, attach: 0, imine: 0, oxygen: 1, carbonyl: 1, cut: 1, enamine: 0, g3p: 0, dhap: 0, water: 0, waterX: 420, waterY: 170, proton: 0 }
+    },
+    {
+      t: 'Lisin menangkap C2', short: 'Lisin mengikat',
+      x: 'FBP berada di sisi aktif dalam bentuk rantai terbuka. Gugus amino lisin menyerang C2 dan membentuk ikatan sementara dengan substrat. Tahap antara ini disebut karbinolamina.',
+      b: 'Ikatan C2–N terbentuk; C2=O berubah menjadi C2–OH.',
+      note: 'Lisin menjadi pegangan sementara bagi substrat.',
+      pose: { leftY: 0, leftX: 0, rightY: 0, rightX: 0, attach: 1, imine: 0, oxygen: 1, carbonyl: 0, cut: 1, enamine: 0, g3p: 0, dhap: 0, water: 0, waterX: 350, waterY: 182, proton: 0 }
+    },
+    {
+      t: 'Terbentuk basa Schiff', short: 'Basa Schiff',
+      x: 'Karbinolamina melepaskan air dan menjadi basa Schiff terprotonasi (iminium). Ikatan C2=N dengan lisin membantu menstabilkan perubahan elektron pada langkah pemutusan berikutnya.',
+      b: 'C2–N menjadi C2=N; satu H₂O dilepas.',
+      note: 'Basa Schiff: substrat terikat kovalen ke lisin.',
+      pose: { leftY: 0, leftX: 0, rightY: 0, rightX: 0, attach: 1, imine: 1, oxygen: 0, carbonyl: 0, cut: 1, enamine: 0, g3p: 0, dhap: 0, water: 1, waterX: 455, waterY: 169, proton: 0 }
+    },
+    {
+      t: 'C3–C4 putus, G3P lepas', short: 'Ikatan putus',
+      x: 'Dengan bantuan katalisis asam–basa, ikatan C3–C4 terputus. C4–C6 dilepas sebagai G3P, lalu memudar saat keluar dari gambar. C1–C3 masih menempel pada lisin sebagai intermediat enamin; bagian ini belum menjadi DHAP bebas.',
+      b: 'C3–C4 putus; muncul C2=C3 pada enamin dan C4=O pada G3P.',
+      note: 'G3P keluar lebih dahulu; fragmen C1–C3 masih terikat.',
+      pose: { leftY: 0, leftX: 0, rightY: 73, rightX: 49, attach: 1, imine: 0, oxygen: 0, carbonyl: 0, cut: 0, enamine: 1, g3p: 1, dhap: 0, water: 0, waterX: 520, waterY: 145, proton: 0 }
+    },
+    {
+      t: 'Menyiapkan pelepasan DHAP', short: 'Protonasi',
+      x: 'Intermediat enamin menerima proton pada bagian C3. Ikatannya tersusun kembali menjadi iminium. Fragmen tiga karbon ini masih berpegangan pada lisin, sementara G3P sudah bebas.',
+      b: 'C2=C3 kembali tunggal dan ikatan C2=N terbentuk kembali.',
+      note: 'Belum lepas: calon DHAP masih terhubung ke enzim.',
+      pose: { leftY: 0, leftX: 0, rightY: 82, rightX: 55, attach: 1, imine: 1, oxygen: 0, carbonyl: 0, cut: 0, enamine: 0, g3p: 1, dhap: 0, water: 0, waterX: 440, waterY: 155, proton: 1 }
+    },
+    {
+      t: 'Air membantu melepas ikatan', short: 'Hidrolisis',
+      x: 'Air bereaksi dengan iminium, melalui karbinolamina lagi, untuk menguraikan ikatan antara C2 dan lisin. Inilah hidrolisis pada mekanisme ini: yang dilepas adalah ikatan ke enzim, bukan ikatan C3–C4.',
+      b: 'H₂O masuk; C2=N menjadi tunggal dan C2–OH terbentuk sementara.',
+      note: 'Hidrolisis mempersiapkan pemutusan ikatan C2–N.',
+      pose: { leftY: 0, leftX: 0, rightY: 82, rightX: 55, attach: 1, imine: 0, oxygen: 1, carbonyl: 0, cut: 0, enamine: 0, g3p: 1, dhap: 0, water: 1, waterX: 375, waterY: 177, proton: 0 }
+    },
+    {
+      t: 'Dua produk, enzim siap lagi', short: 'Produk bebas',
+      x: 'DHAP akhirnya dilepas, lalu memudar sampai keluar dari gambar. Lisin kembali ke bentuk semula dan enzim siap dipakai lagi. Hasilnya tetap satu DHAP dari C1–C3 dan satu G3P dari C4–C6; produk yang memudar tidak musnah.',
+      b: 'C2–N putus; C2=O pada DHAP pulih. Kedua produk sudah bebas.',
+      note: '1 FBP ⇌ 1 DHAP + 1 G3P · karbon tetap 6 = 3 + 3.',
+      pose: { leftY: 82, leftX: -48, rightY: 82, rightX: 55, attach: 0, imine: 0, oxygen: 1, carbonyl: 1, cut: 0, enamine: 0, g3p: 1, dhap: 1, water: 0, waterX: 330, waterY: 205, proton: 0 }
+    }
+  ];
+  const STEP_SECONDS = 6;
+  // Tahap terakhir mendapat waktu tersendiri untuk pelepasan dan fade-out DHAP.
+  const DURATION = STEP_SECONDS * scenes.length;
+  const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
+  const smooth = v => { const t = clamp(v); return t * t * (3 - 2 * t); };
+  const opacity = (id, value) => { $(id).style.opacity = value.toFixed(4); };
+  let position = 0, running = false, frameId = null, lastTime = null;
+  let lastScene = -1, selectedPart = 'cut';
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  $('timeline').max = String(DURATION);
+
+  // Nomor karbon substrat tetap dipertahankan setelah pemisahan.
+  for (let carbon = 1; carbon <= 6; carbon++) {
+    const x = 210 + (carbon - 1) * 96;
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', 'molecule-hotspot');
+    g.setAttribute('role', 'button');
+    g.setAttribute('tabindex', '0');
+    g.setAttribute('data-inspect', 'c' + carbon);
+    g.setAttribute('aria-label', 'Jelajahi karbon C' + carbon);
+    g.innerHTML = `<circle class="carbon" cx="${x}" cy="245" r="25"/><text x="${x}" y="251" text-anchor="middle" class="svg-atom-text">C${carbon}</text>`;
+    $(carbon <= 3 ? 'left-atoms' : 'right-atoms').appendChild(g);
+  }
+
+  scenes.forEach((scene, i) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.setAttribute('aria-label', `Tahap ${i + 1}: ${scene.t}`);
+    button.innerHTML = `<span class="step-number" aria-hidden="true">${i + 1}</span><span>${scene.short}</span>`;
+    button.addEventListener('click', () => seek(i * STEP_SECONDS));
+    $('steps').appendChild(button);
+
+    const wrap = document.createElement('div');
+    wrap.style.margin = '12px 0';
+    const label = document.createElement('label');
+    label.className = 'f';
+    label.htmlFor = 'n' + i;
+    const strong = document.createElement('b');
+    strong.textContent = `${i + 1} · ${scene.t}`;
+    label.appendChild(strong);
+    const field = document.createElement('textarea');
+    field.id = 'n' + i;
+    field.placeholder = 'Tahap ini sesuai dengan panel atau bagian ... pada gambar jurnal, yaitu ...';
+    wrap.append(label, field);
+    $('tahap').appendChild(wrap);
+  });
+  const stepButtons = [...$('steps').children];
+  const moleculeTargets = new Map(['left', 'right', 'cut-hotspot', 'water', 'proton'].map(id => {
+    const group = $(id);
+    const targets = [...group.querySelectorAll('[role=button]')];
+    if (group.matches('[role=button]')) targets.push(group);
+    return [id, targets];
+  }));
+
+  function moleculeOpacity(id, value) {
+    const group = $(id);
+    const alpha = clamp(value);
+    const hidden = alpha < 0.001;
+    opacity(id, alpha);
+    // Molekul yang sudah keluar tidak menyisakan area klik atau fokus tak terlihat.
+    if (group.getAttribute('aria-hidden') !== String(hidden)) {
+      group.setAttribute('aria-hidden', String(hidden));
+      group.style.visibility = hidden ? 'hidden' : 'visible';
+      group.style.pointerEvents = hidden ? 'none' : 'auto';
+      moleculeTargets.get(id).forEach(target => target.setAttribute('tabindex', hidden ? '-1' : '0'));
+    }
+  }
+
+  function textIfChanged(id, text) {
+    if ($(id).textContent !== text) $(id).textContent = text;
+  }
+
+  function substanceTiming(time) {
+    // Semua opacity bergantung pada waktu pemutar; tidak ada transisi CSS mandiri.
+    // Hilang berarti keluar dari area gambar, bukan kehilangan atom atau massa.
+    const arrival = smooth((time - 0.25) / 2.25);
+    const g3pExit = smooth((time - 19) / 3.5);
+    const dhapExit = smooth((time - 37) / 4.5);
+    const waterReleased = smooth((time - 9) / 1.5) * (1 - smooth((time - 11.3) / 2.2));
+    const waterIncoming = smooth((time - 26.2) / 1.4) * (1 - smooth((time - 30.5) / 2));
+    const waterTravel = time < 20 ? smooth((time - 9) / 4.5) : smooth((time - 26.2) / 3.8);
+    const events = [
+      [0.25, 'Menunggu substrat masuk'],
+      [2.5, 'FBP masuk · muncul perlahan'],
+      [6, 'FBP sudah masuk ke sisi aktif'],
+      [9, 'FBP terikat pada lisin'],
+      [13.5, 'H₂O terbentuk dan keluar'],
+      [17.5, 'Ikatan C3–C4 sedang diputus'],
+      [19, 'G3P terbentuk · mulai dilepas'],
+      [22.5, 'G3P keluar · memudar'],
+      [26.2, 'G3P sudah keluar · C1–C3 tetap terikat'],
+      [30.5, 'H₂O masuk untuk hidrolisis'],
+      [34, 'Ikatan lisin diuraikan · DHAP disiapkan'],
+      [37, 'DHAP terbentuk · mulai dilepas'],
+      [41.5, 'DHAP keluar · memudar']
+    ];
+    const event = events.find(([end]) => time < end)?.[1] || 'Kedua produk telah keluar · enzim siap kembali';
+    const products = time >= 41.5 ? 'G3P + DHAP sudah keluar'
+      : time >= 34 ? 'G3P sudah keluar · DHAP sedang dilepas'
+      : time >= 22.5 ? 'G3P sudah keluar · DHAP masih terikat'
+      : time >= 17.5 ? 'G3P sedang keluar · DHAP masih terikat'
+      : 'Produk belum dilepas';
+    return {
+      arrival, g3pExit, dhapExit, event, products,
+      water: Math.max(waterReleased, waterIncoming),
+      waterX: time < 20 ? 326 + 170 * waterTravel : 480 - 105 * waterTravel,
+      waterY: time < 20 ? 189 - 44 * waterTravel : 135 + 42 * waterTravel
+    };
+  }
+
+  function sceneIndex() {
+    return Math.min(scenes.length - 1, Math.floor((position + 0.000001) / STEP_SECONDS));
+  }
+
+  function inspect(part, pausePlayback = true) {
+    if (pausePlayback) pause();
+    selectedPart = part;
+    const index = sceneIndex();
+    const descriptions = {
+      cut: ['Mengapa C3–C4?', index < 3 ? 'Ikatan di tengah ini membagi enam karbon menjadi dua kelompok berisi tiga. Sorotan merah menunjukkan ikatan yang akan diputus pada tahap 4.' : 'Ikatan C3–C4 sudah terputus. C1–C3 menjadi DHAP, sedangkan C4–C6 menjadi G3P. Tidak ada atom karbon yang hilang.'],
+      lys: ['Lisin: pegangan sementara', index === 0 || index === 6 ? 'Lisin adalah bagian dari enzim. Gugus aminonya dapat mengikat C2 selama reaksi, lalu kembali bebas. Enzim tidak habis dipakai.' : 'Garis ungu menunjukkan ikatan kovalen antara nitrogen lisin dan C2. Pegangan ini tetap ada setelah G3P lepas, sampai hidrolisis membebaskan DHAP.'],
+      c2: ['C2: titik ikat lisin', 'C2 memiliki gugus keton pada substrat. Di sinilah lisin membentuk karbinolamina, lalu basa Schiff. Sesudah pelepasan DHAP, gugus ketonnya terbentuk kembali.'],
+      phosphate: ['P: gugus fosfat', 'Huruf P mewakili satu gugus fosfat melalui penghubung oksigen yang disederhanakan. FBP punya fosfat di C1 dan C6. Setelah pemisahan, masing-masing produk tetap membawa satu fosfat.']
+    };
+    const match = /^c([1-6])$/.exec(part);
+    let detail = descriptions[part];
+    if (match && part !== 'c2') {
+      const n = Number(match[1]);
+      detail = [`C${n}: ikuti jejak karbon`, `Karbon ini berasal dari FBP. ${n <= 3 ? 'C1–C3 membentuk DHAP; selama reaksi fragmen ini masih menempel pada lisin.' : 'C4–C6 membentuk G3P yang dilepas lebih dahulu.'} Label tetap memakai nomor FBP agar asal karbon mudah dilacak.`];
+    }
+    if (!detail) return;
+    $('inspect-title').textContent = detail[0];
+    $('inspect-text').textContent = detail[1];
+    root.querySelectorAll('.inspect-options button').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.inspect === part));
+    });
+  }
+
+  function updateControls() {
+    const ended = position >= DURATION;
+    const label = running ? 'Jeda' : ended ? 'Putar lagi' : position > 0 ? 'Lanjutkan' : 'Putar animasi';
+    $('play-label').textContent = label;
+    $('play').setAttribute('aria-label', running ? 'Jeda animasi' : label + (label.includes('animasi') ? '' : ' animasi'));
+    $('play').querySelector('path').setAttribute('d', running ? 'M3 2H6V14H3ZM10 2H13V14H10Z' : 'M4 2 14 8 4 14Z');
+    $('play-state').textContent = running ? 'Sedang diputar' : ended ? 'Reaksi selesai' : position > 0 ? 'Dijeda' : 'Siap dijelajahi';
+    const index = sceneIndex();
+    $('prev').disabled = index === 0;
+    $('next').disabled = index === scenes.length - 1;
+  }
+
+  function render() {
+    const index = sceneIndex();
+    const next = Math.min(index + 1, scenes.length - 1);
+    // Narasi mendapat waktu baca, lalu perpindahan berlangsung pada paruh akhir.
+    const phase = clamp(position / STEP_SECONDS - index);
+    const mix = smooth((phase - 0.38) / 0.58);
+    const pose = {};
+    for (const key of Object.keys(scenes[index].pose)) {
+      pose[key] = scenes[index].pose[key] + (scenes[next].pose[key] - scenes[index].pose[key]) * mix;
+    }
+    // Substrat masuk dahulu sebelum mengikat; DHAP bergerak setelah ikatan lepas.
+    if (index === 0) {
+      pose.leftY = pose.rightY = 92 * (1 - smooth((phase - 0.12) / 0.5));
+      pose.attach = smooth((phase - 0.65) / 0.3);
+    } else if (index === 5) {
+      const release = smooth((phase - 0.38) / 0.24);
+      const leave = smooth((phase - 0.67) / 0.29);
+      pose.attach = 1 - release;
+      pose.carbonyl = release;
+      pose.leftY = 82 * leave;
+      pose.leftX = -48 * leave;
+    }
+    const substances = substanceTiming(position);
+    // Gerak kecil mendukung fade-out, hingga produk melewati batas sisi aktif.
+    pose.rightY += 55 * substances.g3pExit;
+    pose.rightX += 18 * substances.g3pExit;
+    pose.leftY += 48 * substances.dhapExit;
+    pose.leftX -= 14 * substances.dhapExit;
+    moleculeOpacity('left', substances.arrival * (1 - substances.dhapExit));
+    moleculeOpacity('right', substances.arrival * (1 - substances.g3pExit));
+    moleculeOpacity('cut-hotspot', pose.cut > 0.001 ? substances.arrival : 0);
+    moleculeOpacity('water', substances.water);
+    moleculeOpacity('proton', pose.proton);
+    opacity('empty-guide', Math.max(1 - substances.arrival, substances.dhapExit));
+    textIfChanged('empty-guide', position < 0.25 ? 'Putar animasi untuk melihat substrat masuk.'
+      : position < 36 ? 'Substrat sedang masuk ke sisi aktif.'
+      : position < 41.5 ? 'DHAP sedang keluar dari sisi aktif.' : 'Produk telah keluar. Enzim siap digunakan kembali.');
+    textIfChanged('molecule-event', substances.event);
+    textIfChanged('product-status', substances.products);
+    const chemistry = mix < 0.5 ? index : next;
+    $('left').setAttribute('transform', `translate(${pose.leftX.toFixed(3)} ${pose.leftY.toFixed(3)})`);
+    $('right').setAttribute('transform', `translate(${pose.rightX.toFixed(3)} ${pose.rightY.toFixed(3)})`);
+    // Ikatan lisin tetap ada sampai pelepasan pada akhir hidrolisis.
+    opacity('lys-single', pose.attach * (1 - pose.imine));
+    opacity('imine', pose.attach * pose.imine);
+    opacity('enamine', pose.enamine);
+    opacity('c2-oxygen', pose.oxygen);
+    opacity('c2-double', pose.carbonyl);
+    opacity('c4-double', 1 - pose.cut);
+    opacity('cut', pose.cut);
+    $('cut').setAttribute('transform', `translate(0 ${pose.leftY.toFixed(3)})`);
+    $('cut-glow').setAttribute('transform', `translate(0 ${pose.leftY.toFixed(3)})`);
+    const cutting = index === 2 ? Math.sin(clamp((phase - 0.1) / 0.86) * Math.PI) : 0;
+    opacity('cut-glow', cutting * 0.8);
+    $('cut').setAttribute('stroke', index === 2 ? '#ff7189' : '#9fb9f1');
+    $('cut').setAttribute('stroke-dasharray', index === 2 ? '7 5' : 'none');
+    opacity('dhap', pose.dhap);
+    opacity('g3p', pose.g3p);
+    opacity('intermediate', pose.attach);
+    $('water').setAttribute('transform', `translate(${substances.waterX.toFixed(3)} ${substances.waterY.toFixed(3)})`);
+    $('lys-label').textContent = chemistry === 0 || chemistry === 6 ? 'NH₂' : chemistry === 2 || chemistry === 4 ? 'NH⁺' : 'NH';
+    $('c2-oxygen-label').textContent = chemistry === 0 || chemistry === 6 ? 'O' : 'OH';
+    $('c4-oxygen-label').textContent = chemistry >= 3 ? 'O' : 'OH';
+    $('left-atoms').querySelectorAll('circle').forEach(atom => { atom.style.stroke = chemistry === 6 ? '#7de1c4' : '#7aa9ff'; });
+    $('right-atoms').querySelectorAll('circle').forEach(atom => { atom.style.stroke = chemistry >= 3 ? '#7de1c4' : '#7aa9ff'; });
+    $('timeline').value = position.toFixed(3);
+    $('time-label').textContent = `00:${String(Math.floor(position)).padStart(2, '0')} / 00:${DURATION}`;
+    $('timeline').setAttribute('aria-valuetext', `${position.toFixed(1)} detik. Tahap ${index + 1}: ${scenes[index].t}`);
+    if (index !== lastScene) {
+      lastScene = index;
+      $('ctitle').textContent = scenes[index].t;
+      $('ctext').textContent = scenes[index].x;
+      $('cbond').textContent = scenes[index].b;
+      $('stage-equation').textContent = scenes[index].note;
+      $('stage-counter').textContent = `TAHAP ${index + 1} DARI ${scenes.length}`;
+      stepButtons.forEach((button, i) => {
+        if (i === index) button.setAttribute('aria-current', 'step');
+        else button.removeAttribute('aria-current');
+      });
+      inspect(selectedPart, false);
+      updateControls();
+    }
+  }
+
+  function pause() {
+    running = false;
+    if (frameId !== null) cancelAnimationFrame(frameId);
+    frameId = null;
+    lastTime = null;
+    updateControls();
+  }
+
+  function seek(seconds) {
+    pause();
+    position = clamp(Number(seconds) || 0, 0, DURATION);
+    render();
+    updateControls();
+  }
+
+  function tick(now) {
+    if (!running) return;
+    if (lastTime !== null) {
+      position = clamp(position + Math.max(0, now - lastTime) / 1000 * Number($('speed').value), 0, DURATION);
+    }
+    lastTime = now;
+    render();
+    if (position >= DURATION) return pause();
+    frameId = requestAnimationFrame(tick);
+  }
+
+  function togglePlayback() {
+    if (running) return pause();
+    if (position >= DURATION) { position = 0; render(); }
+    running = true;
+    lastTime = null;
+    updateControls();
+    frameId = requestAnimationFrame(tick);
+  }
+
+  $('play').addEventListener('click', togglePlayback);
+  $('prev').addEventListener('click', () => seek((sceneIndex() - 1) * STEP_SECONDS));
+  $('next').addEventListener('click', () => seek((sceneIndex() + 1) * STEP_SECONDS));
+  $('reset').addEventListener('click', () => seek(0));
+  $('timeline').addEventListener('pointerdown', pause);
+  $('timeline').addEventListener('input', e => seek(e.target.value));
+  $('speed').addEventListener('change', () => { lastTime = null; });
+  $('zoom').addEventListener('click', () => {
+    pause();
+    const stage = root.querySelector('.lab-stage');
+    const enlarged = stage.classList.toggle('is-zoomed');
+    $('zoom').setAttribute('aria-pressed', String(enlarged));
+    $('zoom').textContent = enlarged ? 'Tampilkan seluruh diagram' : 'Perbesar diagram';
+    $('diagram-hint').textContent = enlarged
+      ? 'Geser diagram ke samping untuk menjelajahi molekul. Pilih bagian untuk penjelasan.'
+      : 'Pilih karbon, lisin, fosfat, atau ikatan di tengah untuk penjelasannya.';
+    if (!enlarged) stage.scrollLeft = 0;
+  });
+
+  root.querySelectorAll('[data-inspect]').forEach(element => {
+    element.addEventListener('click', () => inspect(element.dataset.inspect));
+    if (element.tagName.toLowerCase() !== 'button') {
+      element.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.stopPropagation();
+          inspect(element.dataset.inspect);
+        }
+      });
+    }
+  });
+  root.addEventListener('keydown', e => {
+    if (e.altKey || e.ctrlKey || e.metaKey || e.target.closest('input, textarea, select, [contenteditable=true]')) return;
+    if (e.key === ' ' && !e.target.closest('button, [role=button], summary, a')) {
+      e.preventDefault();
+      if (!e.repeat) togglePlayback();
+    } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      seek((sceneIndex() + (e.key === 'ArrowRight' ? 1 : -1)) * STEP_SECONDS);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      seek(0);
+    }
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+  window.addEventListener('pagehide', pause);
+  const updateMotionPreference = () => {
+    $('reduced-note').hidden = !reducedMotion.matches;
+    if (reducedMotion.matches) pause();
+  };
+  reducedMotion.addEventListener('change', updateMotionPreference);
+
+  // Unggah gambar jurnal tetap terpisah dari kontrol pemutar.
+  $('jfile').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      $('jimg').src = reader.result;
+      $('jimg').hidden = false;
+    });
+    reader.readAsDataURL(file);
+  });
+  updateMotionPreference();
+  render();
+  updateControls();
+})();
+  </script>
+</body>
+
+</html>
